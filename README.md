@@ -1,4 +1,4 @@
-Form library for Flutter, offering controlled inputs, user-friendly form validation and more.
+Form library for Flutter, offering controlled inputs, user-friendly validation and more.
 
 ## Features
 
