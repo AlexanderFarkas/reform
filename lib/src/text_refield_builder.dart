@@ -3,7 +3,7 @@ part of '../reform.dart';
 typedef TextRefieldWidgetBuilder = Widget Function(
   BuildContext context,
   TextEditingController controller,
-  String? error,
+  String? errorText,
 );
 
 class TextRefieldBuilder extends StatefulWidget {

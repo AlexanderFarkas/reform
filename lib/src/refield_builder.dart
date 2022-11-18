@@ -1,7 +1,10 @@
 part of '../reform.dart';
 
 typedef FieldWidgetBuilder<T> = Widget Function(
-    BuildContext context, T value, String? error);
+  BuildContext context,
+  T value,
+  String? errorText,
+);
 
 class RefieldBuilder<T> extends StatefulWidget {
   final Refield<T> field;
