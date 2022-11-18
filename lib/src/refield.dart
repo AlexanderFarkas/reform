@@ -3,9 +3,11 @@ part of '../reform.dart';
 typedef Validator<T> = bool Function(T value);
 
 class Reform {
-  static validate(List<Refield<dynamic>> fields) => fields.every((element) => element.isValid);
+  static validate(List<Refield<dynamic>> fields) =>
+      fields.every((element) => element.isValid);
 
-  static defaultShouldShowError<T>(Refield<T> field, FieldBuilderState<T> state) {
+  static defaultShouldShowError<T>(
+      Refield<T> field, FieldBuilderState<T> state) {
     return true;
   }
 }
@@ -23,7 +25,8 @@ class Refield<T> {
     this.validator,
   );
 
-  late final String? error = _parent?.error ?? (validator(value) ? null : _errorText);
+  late final String? error =
+      _parent?.error ?? (validator(value) ? null : _errorText);
   late final isValid = error == null;
 
   Refield<T> then(Validator<T> validator, String errorText) =>

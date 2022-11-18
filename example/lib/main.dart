@@ -33,7 +33,8 @@ class MyApp extends StatelessWidget {
                     child: Column(
                       children: [
                         state.usernameField.builder(
-                          builder: (context, controller, errorText) => TextField(
+                          builder: (context, controller, errorText) =>
+                              TextField(
                             controller: controller,
                             decoration: InputDecoration(errorText: errorText),
                             onChanged: cubit.onUsernameChanged,

@@ -55,7 +55,8 @@ class _TextRefieldBuilderState extends State<TextRefieldBuilder> {
     return RefieldBuilder(
       field: widget.field,
       shouldShowError: widget.shouldShowError,
-      builder: (context, value, error) => widget.builder(context, controller, error),
+      builder: (context, value, error) =>
+          widget.builder(context, controller, error),
     );
   }
 }
