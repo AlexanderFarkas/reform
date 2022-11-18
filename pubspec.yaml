@@ -1,5 +1,9 @@
 name: reform
-description: Controlled forms for Flutter.
+description: -<
+  Form library for Flutter,
+  offering controlled inputs,
+  user-friendly form validation and more.
+  
 version: 0.0.1
 
 environment:
