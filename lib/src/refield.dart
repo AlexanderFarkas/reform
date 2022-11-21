@@ -3,7 +3,8 @@ part of '../reform.dart';
 typedef Validator<T> = String? Function(T value);
 
 class Reform {
-  static bool validate(List<Refield<dynamic>> fields) => fields.every((element) => element.isValid);
+  static bool validate(List<Refield<dynamic>> fields) =>
+      fields.every((element) => element.isValid);
 
   static bool defaultShouldShowError<T>(FieldBuilderState<T> state) {
     return true;
