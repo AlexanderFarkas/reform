@@ -3,7 +3,8 @@ part of '../reform.dart';
 typedef Validator<T> = String? Function(T value);
 
 class Reform {
-  static bool validate(List<Refield<dynamic>> fields) => fields.every((element) => element.isValid);
+  static bool validate(List<Refield<dynamic>> fields) =>
+      fields.every((element) => element.isValid);
 
   static bool defaultShouldShowError<T>(FieldBuilderState<T> state) {
     return true;
@@ -27,7 +28,7 @@ class Refield<T> {
 
   /// Use it in UI and consider field valid for end user, if [displayError] == null
   late final String? displayError = _parent?.displayError ?? _validate(value);
-  
+
   /// You should only use [isValid] inside your logic
   /// It could be overridden to prevent submission
   late final isValid = displayError == null;

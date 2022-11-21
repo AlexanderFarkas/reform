@@ -55,9 +55,10 @@ class FieldBuilderState<T> extends State<RefieldBuilder<T>> {
       child: Builder(
         builder: (context) {
           final field = widget.field;
-          final ShowErrorPredicate<T> shouldShowErrorFn = widget.shouldShowError ??
-              ReformScope.of(context)?.shouldShowError ??
-              Reform.defaultShouldShowError;
+          final ShowErrorPredicate<T> shouldShowErrorFn =
+              widget.shouldShowError ??
+                  ReformScope.of(context)?.shouldShowError ??
+                  Reform.defaultShouldShowError;
 
           return widget.builder(
             context,
