@@ -1,41 +1,49 @@
 part of '../reform.dart';
 
-typedef Validator<T> = bool Function(T value);
+typedef Validator<T> = String? Function(T value);
 
 class Reform {
-  static bool validate(List<Refield<dynamic>> fields) =>
-      fields.every((element) => element.isValid);
+  static bool validate(List<Refield<dynamic>> fields) => fields.every((element) => element.isValid);
 
-  static bool defaultShouldShowError<T>(
-      Refield<T> field, FieldBuilderState<T> state) {
+  static bool defaultShouldShowError<T>(FieldBuilderState<T> state) {
     return true;
   }
 }
 
+typedef DisplayErrorFn<T> = bool Function(T value);
+
 class Refield<T> {
   final Refield<T>? _parent;
-  final String _errorText;
+
   final T value;
-  final Validator<T> validator;
+  final Validator<T> _validate;
 
-  Refield(
-    this._parent,
-    this._errorText,
-    this.value,
-    this.validator,
-  );
+  Refield({
+    required this.value,
+    required Validator<T> validate,
+    Refield<T>? parent,
+  })  : _parent = parent,
+        _validate = validate;
 
-  late final String? error =
-      _parent?.error ?? (validator(value) ? null : _errorText);
-  late final isValid = error == null;
+  /// Use it in UI and consider field valid for end user, if [displayError] == null
+  late final String? displayError = _parent?.displayError ?? _validate(value);
+  
+  /// You should only use [isValid] inside your logic
+  /// It could be overridden to prevent submission
+  late final isValid = displayError == null;
 
-  Refield<T> then(Validator<T> validator, String errorText) =>
-      Refield(this, errorText, value, validator);
+  Refield<T> validate(Validator<T> validator) => Refield(
+        value: value,
+        validate: validator,
+        parent: this,
+      );
 }
 
 extension RefieldX<T> on T {
-  Refield<T> validate(Validator<T> validator, String errorText) =>
-      Refield(null, errorText, this, validator);
+  Refield<T> validate(Validator<T> validator) => Refield(
+        value: this,
+        validate: validator,
+      );
 }
 
 extension FlutterRefieldX<T> on Refield<T> {

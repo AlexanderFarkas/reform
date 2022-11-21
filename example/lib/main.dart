@@ -28,13 +28,12 @@ class MyApp extends StatelessWidget {
                 builder: (context, state) {
                   final cubit = context.watch<MainCubit>();
                   return ReformScope(
-                    shouldShowError: (field, fieldState) =>
+                    shouldShowError: (fieldState) =>
                         state.isSubmittedOnce || fieldState.wasEverUnfocused,
                     child: Column(
                       children: [
                         state.usernameField.builder(
-                          builder: (context, controller, errorText) =>
-                              TextField(
+                          builder: (context, controller, errorText) => TextField(
                             controller: controller,
                             decoration: InputDecoration(errorText: errorText),
                             onChanged: cubit.onUsernameChanged,

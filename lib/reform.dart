@@ -1,5 +1,6 @@
 library reform;
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 
 part 'src/refield.dart';

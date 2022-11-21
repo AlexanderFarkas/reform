@@ -20,19 +20,23 @@ Add field validation:
 class Form {
   ...
 
-  late final usernameField = username
-      .validate((value) => isLength(value, 8), "Min 8 chars")
-      .then((value) => isLength(value, 0, 16), "Max 16 chars")
-      .then(isAlphanumeric, "Only numbers and letters");
+  late final usernameField = username.validate((value) {
+    if (value.length < 8) {
+      return "Min 8 chars";
+    } else if (value.length > 16) {
+      return "Max 16 chars";
+    } else if (isAlphanumeric(value)) {
+      return "Only numbers and letters";
+    }
+    return null;
+  });
 
   late final passwordField = password.validate(
-    (value) => isLength(value, 8),
-    "Min 8 chars",
+    (value) => value.length < 8 ? "At least 8 characters" : null,
   );
 
   late final repeatPasswordField = repeatPassword.validate(
-    (value) => value == password,
-    "Passwords should match",
+    (value) => value != password ? "Passwords should match" : null,
   );
 }
 ```
