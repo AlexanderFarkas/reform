@@ -5,7 +5,7 @@ description: >-
   user-friendly validation and more.
 repository: https://github.com/AlexanderFarkas/reform
 
-version: 0.0.4
+version: 0.0.5
 
 environment:
   sdk: '>=2.17.0 <3.0.0'
