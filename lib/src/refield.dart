@@ -46,6 +46,7 @@ typedef DisplayErrorFn<T> = bool Function(T value);
 // }
 
 abstract class Refield<TOriginal> {
+  abstract final Refield<TOriginal>? parent;
   abstract final TOriginal value;
 
   /// Use when you want to display an error in user-facing code
@@ -54,7 +55,10 @@ abstract class Refield<TOriginal> {
 
   /// Use when you're deciding whether form is submittable.
   /// E.g. in your view model
-  abstract final bool isValid;
+  bool get isValid => displayError != null;
+
+  @nonVirtual
+  late final _isParentValid = parent?.isValid ?? true;
 }
 
 abstract class SanitizableRefield<TOriginal, TSanitized> extends Refield<TOriginal> {
@@ -120,13 +124,10 @@ abstract class _Refield<TOriginal, TSanitized, TParentSanitized>
     extends SanitizableRefield<TOriginal, TSanitized> {
   @override
   final TOriginal originalValue;
+  @override
   final _Refield<TOriginal, TParentSanitized, dynamic>? parent;
 
   _Refield({required this.originalValue, required this.parent});
-
-  @nonVirtual
-  @protected
-  late final bool isParentValid = parent?.isValid ?? true;
 
   @nonVirtual
   @protected
@@ -163,7 +164,7 @@ class _ValidatorRefield<T, TParentSanitized>
   late final String? displayError = parent?.displayError ?? _validator(sanitizedValue);
 
   @override
-  late final bool isValid = isParentValid && displayError == null;
+  late final bool isValid = _isParentValid && displayError == null;
 
   @override
   late final TParentSanitized sanitizedValue = parentSanitizedValue;
@@ -181,9 +182,6 @@ class _SanitizerRefield<T, TSanitized, TParentSanitized>
 
   @override
   late final displayError = parent?.displayError;
-
-  @override
-  late final isValid = isParentValid;
 
   late final TSanitized _sanitizedValue = _sanitizer(parentSanitizedValue);
 
