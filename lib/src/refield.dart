@@ -54,11 +54,13 @@ extension RefieldX<T> on T {
 extension FlutterRefieldX<T> on Refield<T> {
   Widget builder({
     Key? key,
+    ShowErrorPredicate? shouldShowError,
     required FieldWidgetBuilder<T> builder,
   }) =>
       RefieldBuilder<T>(
         key: key,
         field: this,
+        shouldShowError: shouldShowError,
         builder: builder,
       );
 }
@@ -67,6 +69,8 @@ extension FlutterTextRefieldX on Refield<String> {
   Widget builder({
     Key? key,
     TextEditingController? controller,
+    ShowErrorPredicate? shouldShowError,
+    required ValueChanged<String> onChanged,
     required TextRefieldWidgetBuilder builder,
   }) =>
       TextRefieldBuilder(
@@ -74,5 +78,7 @@ extension FlutterTextRefieldX on Refield<String> {
         field: this,
         controller: controller,
         builder: builder,
+        shouldShowError: shouldShowError,
+        onChanged: onChanged,
       );
 }
