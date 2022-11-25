@@ -45,7 +45,7 @@ class _TextRefieldBuilderState extends State<TextRefieldBuilder> {
   void didUpdateWidget(covariant TextRefieldBuilder oldWidget) {
     final value = widget.field.value;
     if (value != controller.text) {
-      controller.text = value;
+      setState(() => controller.text = value);
     }
     super.didUpdateWidget(oldWidget);
   }
