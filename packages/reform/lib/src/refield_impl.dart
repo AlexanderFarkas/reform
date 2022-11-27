@@ -9,8 +9,9 @@ abstract class _RefieldWithParent<TOriginal, TSanitized, TParentSanitized>
 
   @nonVirtual
   @protected
-  late final TParentSanitized parentSanitizedValue =
-      parent != null ? parent!.sanitizedValue : originalValue as TParentSanitized;
+  late final TParentSanitized parentSanitizedValue = parent != null
+      ? parent!.sanitizedValue
+      : originalValue as TParentSanitized;
 
   @nonVirtual
   @protected
@@ -27,7 +28,8 @@ class _ValidatorRefield<T, TParentSanitized>
   }) : _validator = validator;
 
   @override
-  late final String? displayError = parent?.displayError ?? _validator(sanitizedValue);
+  late final String? displayError =
+      parent?.displayError ?? _validator(sanitizedValue);
 
   @override
   late final bool isValid = isParentValid && displayError == null;
@@ -59,7 +61,8 @@ class _SanitizerRefield<T, TSanitized, TParentSanitized>
     if (isValid) {
       return _sanitizedValue;
     } else {
-      throw StateError("`sanitizedValue` cannot be accessed, when `isValid == false`");
+      throw StateError(
+          "`sanitizedValue` cannot be accessed, when `isValid == false`");
     }
   }
 }

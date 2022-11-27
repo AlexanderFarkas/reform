@@ -39,7 +39,8 @@ extension RefieldX<T> on T {
         parent: null,
       );
 
-  Refield<T, TSanitized> sanitize<TSanitized>(Sanitizer<T, TSanitized> sanitizer) =>
+  Refield<T, TSanitized> sanitize<TSanitized>(
+          Sanitizer<T, TSanitized> sanitizer) =>
       _SanitizerRefield(
         originalValue: this,
         sanitizer: sanitizer,
