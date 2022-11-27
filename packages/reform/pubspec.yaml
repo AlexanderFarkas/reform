@@ -1,9 +1,8 @@
 name: reform
 description: >-
-  Form library for Flutter,
-  offering controlled inputs,
-  user-friendly validation and more.
-repository: https://github.com/AlexanderFarkas/reform
+  Pure dart form validation and sanitization,
+  built with Flutter in mind
+repository: https://github.com/AlexanderFarkas/reform/tree/main/packages/reform
 
 version: 0.1.0
 

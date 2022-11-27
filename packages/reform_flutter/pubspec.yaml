@@ -1,15 +1,19 @@
 name: reform_flutter
-description: A new Flutter package project.
+description: >-
+  Form library for Flutter,
+  offering controlled inputs,
+  user-friendly validation and more
 version: 0.1.0
+repository: https://github.com/AlexanderFarkas/reform/tree/main/packages/reform_flutter
 
 environment:
-  sdk: '>=2.18.5 <3.0.0'
+  sdk: '>=2.17.0 <3.0.0'
   flutter: ">=1.17.0"
 
 dependencies:
   flutter:
     sdk: flutter
-  reform: 0.1.0
+  reform: ^0.1.0
 dev_dependencies:
   flutter_test:
     sdk: flutter
