@@ -1,128 +1,58 @@
-Form library for Flutter, offering controlled inputs, user-friendly validation and more.
+Pure dart form validation and sanitization
 
-## Features
+## Validation
 
-Define your fields as usual:
+You could use `validate` extensions method on any value to convert it to validatable field:
+
+Validation is identical to Flutter concept: if value is valid, validator should return null. Otherwise - error text:
 ```dart
-class Form {
-    final String username;
-    final String password;
-    final String repeatPassword;
+final refield = "@my_username".validate(
+  (v) => v.length >= 10 
+    ? null 
+    : "Username should be at least 10 characters"
+);
 
-    final bool wasEverSubmitted; // user tried to submit
-    
-    ...
-}
+refield.displayError // Username should be at least 10 characters
+refield.isValid // false
+refield.value // @my_username
 ```
 
-Add field validation:
+## Sanitization
+
+Sanitization comes in handy, when you apply formatting to your fields:
 ```dart
-class Form {
-  ...
+/// Note: `normalizerFunction` and `phoneValidatorFunction` are user-defined functions. 
+/// You could code your own or use package from pub.dev
+final phoneField = "+1 (323) 888-88-88"
+  .sanitize((v) => normalizerFunction(v))
+  .validate((v) => phoneValidatorFunction());
 
-  late final usernameField = username.validate((value) {
-    if (value.length < 8) {
-      return "Min 8 chars";
-    } else if (value.length > 16) {
-      return "Max 16 chars";
-    } else if (isAlphanumeric(value)) {
-      return "Only numbers and letters";
-    }
-    return null;
-  });
-
-  late final passwordField = password.validate(
-    (value) => value.length < 8 ? "At least 8 characters" : null,
-  );
-
-  late final repeatPasswordField = repeatPassword.validate(
-    (value) => value != password ? "Passwords should match" : null,
-  );
-}
+phoneField.originalValue // +1 (323) 888-88-88
+phoneField.sanitizedValue // +13238888888
+phoneField.isValid // true
 ```
 
-Wrap your Flutter `TextField`s:
+If validation fails, sanitized value cannot be retrieved:
 ```dart
-Widget build(BuildContext context) {
-  final form = ... // retrieve your form
-  return Column(
-    children: [
-      form.usernameField.builder(
-        builder: (context, controller, errorText) => TextField(
-          controller: controller, // provide controller
-          decoration: InputDecoration(errorText: errorText),
-          onChanged: formViewModel.onUsernameChanged, // formViewModel - is your state managemnt instance. It could be ChangeNotifier, Cubit e.t.c.
-        ),
-      ),
-      form.passwordField.builder(
-        builder: (context, controller, errorText) => TextField(
-          controller: controller,
-          decoration: InputDecoration(errorText: errorText),
-          onChanged: formViewModel.onPasswordChanged,
-        ),
-      ),
-      form.repeatPasswordField.builder(
-        builder: (context, controller, errorText) => TextField(
-          controller: controller,
-          decoration: InputDecoration(errorText: errorText),
-          onChanged: formViewModel.onRepeatPasswordChanged,
-        ),
-      ),
-    ]
-  );
-}
-```
-**Now it just works**!
-
-## Adjust moment errors appear
-
-It's not very practical and user-friendly to show errors as user types.
-Let's change it with `ReformScope`!
-
-Wrap your widget tree with `ReformScope` like that:
-
-```dart
-Widget build(BuildContext context) {
-  final form = ... // retrieve your form
-
-  return ReformScope(
-    shouldShowError: (field, fieldState) => form.wasEverSubmitted || fieldState.wasEverUnfocused;
-    child: ... // your `Widget` with fields
-  );
-} 
+phoneField.isValid // false
+phoneField.originalValue // +1 (323) 888-88-88
+phoneField.sanitizedValue // throws StateError
 ```
 
-Now error will become visible once:
-* User submits your form. Since this moment it's appropriate to show errors as user types
-* Field is unfocused after it was focused for the first time. It's appropriate to show user an error, once they finished typing.
-
-## Handle submission
-
-Let's have a quick look at `ChangeNotifier` submission implementation:
-
+## `Reform` utility class
+There is a convinience class to validate several fields:
 ```dart
-class FormViewModel extends ChangeNotifier {
-  ...
+final isFormValid = Reform.isValid([firstNameField, lastNameField, emailField]); 
 
-  void submit() {
-    this.form = form.copyWith(wasEverSubmitted: true);
-    notifyListeners();
-
-    // utility class to help with validation of multiple fields
-    final isValid = Reform.validate([
-      form.usernameField,
-      form.passwordField,
-      form.repeatPasswordField,
-    ]);
-
-    if (isValid) {
-      // POST request to your server
-    }
-  }
-}
+isFormValid // true
 ```
 
-## Immutability
+Also, there is `isEnabled` method:
+```dart
+final isEnabled = Reform.isEnabled([firstNameField, lastNameField, emailField]); 
 
-Thought above example was based on immutabiliy of `Form`, it's completely fine to use `Reform` with mutable classes.
-Just don't forget to replace `late final` with `get`ters.
+isFormEnabled // true
+```
+
+If `isEnabled == true` **user** can click on the submission button.
+If `isValid == true` **you** can send your form to your server.
