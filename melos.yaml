@@ -1,0 +1,7 @@
+name: reform
+packages:
+  - packages/**
+
+command:
+  bootstrap:
+    usePubspecOverrides: true
