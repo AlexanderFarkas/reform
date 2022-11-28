@@ -1,3 +1,7 @@
+## 0.3.1
+
+ - **FEAT**: add `valid` extension method.
+
 ## 0.3.0
 
 > Note: This release has breaking changes.
