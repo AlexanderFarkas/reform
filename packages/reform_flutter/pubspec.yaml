@@ -3,7 +3,7 @@ description: >-
   Form library for Flutter,
   offering controlled inputs,
   user-friendly validation and more
-version: 0.1.1
+version: 0.2.0
 repository: https://github.com/AlexanderFarkas/reform/tree/main/packages/reform_flutter
 
 environment:
@@ -13,7 +13,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  reform: ^0.1.0
+  reform: ^0.2.0
 dev_dependencies:
   flutter_test:
     sdk: flutter
