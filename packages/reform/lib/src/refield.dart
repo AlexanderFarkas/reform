@@ -62,4 +62,6 @@ extension RefieldX<T> on T {
 
   Refield<T, T> pending() =>
       _StatusRefield.pending(parent: _ValidRefield(this));
+
+  Refield<T, T> valid() => _ValidRefield(this);
 }
