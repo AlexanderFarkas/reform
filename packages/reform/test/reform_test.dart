@@ -5,7 +5,6 @@ import 'package:reform/reform.dart';
 void main() {
   test("Basic", () {
     Refield<String, String> field(String value) => value
-        .refield()
         .sanitize((value) => value.trim())
         .validate((value) => value.length == 12 ? null : "Error");
 
@@ -19,7 +18,6 @@ void main() {
 
   test("Nullability", () {
     Refield field(String? value) => value
-        .refield()
         .validate((value) => value == null ? "Can't be null" : null)
         .as<String>()
         .validate((value) => value.length > 8 ? null : "Error");
@@ -39,7 +37,6 @@ void main() {
 
   test("Several sanitizers", () {
     Refield<String?, int> field(String? value) => value
-        .refield()
         .validate((value) => value == null ? "Can't be null" : null)
         .as<String>()
         .validate((value) => value.length > 8 ? null : "Too short")
@@ -71,7 +68,6 @@ void main() {
 
   group("Pending", () {
     Refield field(String value) => value
-        .refield()
         .sanitize((value) => value.replaceAll("@", ''))
         .validate((value) => value.length > 10 ? null : "Min 11 chars");
 
@@ -82,13 +78,12 @@ void main() {
       expect(usernameField.withError("Usernames is already user").error,
           equals("Usernames is already user"));
 
-      expect(usernameField.error, equals("Min 10 chars"));
+      expect(usernameField.error, equals("Min 11 chars"));
       expect(usernameField.status, equals(FieldStatus.invalid));
     });
 
     test("Priority", () {
-      final usernameField =
-          "@my".refield().pending().validate((value) => "Always error");
+      final usernameField = "@my".pending().validate((value) => "Always error");
       expect(usernameField.status, equals(FieldStatus.pending));
       expect(usernameField.error, equals("Always error"));
       expect(Reform.isValid([usernameField]), false);

@@ -4,7 +4,7 @@ abstract class _RefieldWithParent<TOriginal, TSanitized, TParentSanitized>
     extends Refield<TOriginal, TSanitized> {
   final Refield<TOriginal, TParentSanitized> parent;
 
-  _RefieldWithParent(super.value, {required this.parent});
+  _RefieldWithParent({required this.parent}) : super(parent.value);
 
   @override
   FieldStatus get status {
@@ -20,8 +20,7 @@ abstract class _RefieldWithParent<TOriginal, TSanitized, TParentSanitized>
 class _ValidatorRefield<T, TParentSanitized>
     extends _RefieldWithParent<T, TParentSanitized, TParentSanitized> {
   final Validator<TParentSanitized> _validator;
-  _ValidatorRefield(
-    super.value, {
+  _ValidatorRefield({
     required super.parent,
     required Validator<TParentSanitized> validator,
   }) : _validator = validator;
@@ -37,8 +36,7 @@ class _SanitizerRefield<T, TSanitized, TParentSanitized>
     extends _RefieldWithParent<T, TSanitized, TParentSanitized> {
   final Sanitizer<TParentSanitized, TSanitized> _sanitizer;
 
-  _SanitizerRefield(
-    super.value, {
+  _SanitizerRefield({
     required super.parent,
     required Sanitizer<TParentSanitized, TSanitized> sanitizer,
   }) : _sanitizer = sanitizer;
@@ -66,14 +64,13 @@ class _StatusRefield<TOriginal, TParentSanitized>
   @override
   final FieldStatus status;
 
-  _StatusRefield.error(
-    super.value, {
+  _StatusRefield.error({
     required String error,
     required super.parent,
   })  : _error = error,
         status = FieldStatus.invalid;
 
-  _StatusRefield.pending(super.value, {required super.parent})
+  _StatusRefield.pending({required super.parent})
       : _error = null,
         status = FieldStatus.pending;
 

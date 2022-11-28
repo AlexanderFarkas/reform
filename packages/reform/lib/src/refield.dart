@@ -15,14 +15,12 @@ abstract class Refield<TOriginal, TSanitized>
 
   Refield<TOriginal, TSanitized> validate(Validator<TSanitized> validator) =>
       _ValidatorRefield<TOriginal, TSanitized>(
-        value,
         validator: validator,
         parent: this,
       );
 
   Refield<TOriginal, T> sanitize<T>(Sanitizer<TSanitized, T> sanitizer) =>
       _SanitizerRefield<TOriginal, T, TSanitized>(
-        value,
         sanitizer: sanitizer,
         parent: this,
       );
@@ -31,13 +29,12 @@ abstract class Refield<TOriginal, TSanitized>
 
   Refield<TOriginal, TSanitized> withError(String error) =>
       _StatusRefield.error(
-        value,
         error: error,
         parent: this,
       );
 
   Refield<TOriginal, TSanitized> pending() =>
-      _StatusRefield.pending(value, parent: this);
+      _StatusRefield.pending(parent: this);
 }
 
 class _ValidRefield<T> extends Refield<T, T> {
@@ -48,4 +45,21 @@ class _ValidRefield<T> extends Refield<T, T> {
 
   @override
   T get sanitizedValue => value;
+}
+
+extension RefieldX<T> on T {
+  Refield<T, T> validate(Validator<T> validator) => _ValidatorRefield<T, T>(
+        validator: validator,
+        parent: _ValidRefield(this),
+      );
+
+  Refield<T, TSanitized> sanitize<TSanitized>(
+          Sanitizer<T, TSanitized> sanitizer) =>
+      _SanitizerRefield<T, TSanitized, T>(
+        sanitizer: sanitizer,
+        parent: _ValidRefield(this),
+      );
+
+  Refield<T, T> pending() =>
+      _StatusRefield.pending(parent: _ValidRefield(this));
 }
