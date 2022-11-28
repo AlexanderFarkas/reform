@@ -2,12 +2,11 @@ part of '../reform_flutter.dart';
 
 typedef FieldWidgetBuilder<T> = Widget Function(
   BuildContext context,
-  T value,
   String? errorText,
 );
 
 bool _defaultShouldShowError<T>(RefieldBuilderState<T> state) {
-  return true;
+  return !state.field.isPending;
 }
 
 class RefieldBuilder<T> extends StatefulWidget {
@@ -31,6 +30,7 @@ class RefieldBuilderState<T> extends State<RefieldBuilder<T>> {
   bool wasEverUnfocused = false;
   bool wasChangedAfterFocus = false;
   bool wasChanged = false;
+  Field<T> get field => widget.field;
 
   @override
   void didUpdateWidget(covariant RefieldBuilder<T> oldWidget) {
@@ -66,8 +66,7 @@ class RefieldBuilderState<T> extends State<RefieldBuilder<T>> {
 
           return widget.builder(
             context,
-            field.value,
-            shouldShowErrorFn(this) ? field.displayError : null,
+            shouldShowErrorFn(this) ? field.error : null,
           );
         },
       ),

@@ -1,8 +1,12 @@
 part of '../reform.dart';
 
 class Reform {
-  static bool isEnabled(List<Field> fields) =>
-      fields.every((element) => element.displayError == null);
+  Reform._();
+
   static bool isValid(List<Field> fields) =>
-      fields.every((element) => element.isValid);
+      fields.every((field) => field.isValid);
+}
+
+extension RefieldX<T> on T {
+  Refield<T, T> refield() => _ValidRefield(this);
 }
