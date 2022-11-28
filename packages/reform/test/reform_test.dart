@@ -1,6 +1,5 @@
-import 'package:flutter_test/flutter_test.dart';
-
 import 'package:reform/reform.dart';
+import 'package:test/test.dart';
 
 void main() {
   test("Basic", () {
