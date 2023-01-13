@@ -13,6 +13,10 @@ class TextRefieldBuilder extends StatefulWidget {
   final TextEditingController? controller;
   final TextRefieldWidgetBuilder builder;
 
+  /// Whether to propagate [field.value] changes to underlying controller
+  /// `true` by default
+  final bool syncController;
+
   const TextRefieldBuilder({
     super.key,
     this.controller,
@@ -20,6 +24,7 @@ class TextRefieldBuilder extends StatefulWidget {
     required this.onChanged,
     this.shouldShowError,
     required this.builder,
+    this.syncController = true,
   });
 
   @override
@@ -55,7 +60,7 @@ class _TextRefieldBuilderState extends State<TextRefieldBuilder> {
   @override
   void didUpdateWidget(covariant TextRefieldBuilder oldWidget) {
     final value = widget.field.value;
-    if (value != controller.text) {
+    if (widget.syncController && value != controller.text) {
       controller.text = value;
     }
     super.didUpdateWidget(oldWidget);

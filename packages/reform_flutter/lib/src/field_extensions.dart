@@ -21,6 +21,7 @@ extension FlutterTextRefieldX on Field<String> {
     ShowErrorPredicate? shouldShowError,
     required ValueChanged<String> onChanged,
     required TextRefieldWidgetBuilder builder,
+    bool syncController = true,
   }) =>
       TextRefieldBuilder(
         key: key,
@@ -29,5 +30,6 @@ extension FlutterTextRefieldX on Field<String> {
         builder: builder,
         shouldShowError: shouldShowError,
         onChanged: onChanged,
+        syncController: syncController,
       );
 }
