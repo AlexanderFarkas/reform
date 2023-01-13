@@ -1,3 +1,9 @@
+## 0.4.0
+
+> Note: This release has breaking changes.
+
+ - **BREAKING** **FEAT**: don't update controller.text, if controller is passed through parameter.
+
 ## 0.3.1
 
  - **FEAT**: add syncController.
