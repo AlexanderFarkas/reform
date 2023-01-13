@@ -1,3 +1,7 @@
+## 0.3.1
+
+ - **FEAT**: add syncController.
+
 ## 0.3.0+1
 
  - Update a dependency to the latest release.
