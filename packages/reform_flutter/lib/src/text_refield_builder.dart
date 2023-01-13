@@ -33,18 +33,24 @@ class TextRefieldBuilder extends StatefulWidget {
 
 class _TextRefieldBuilderState extends State<TextRefieldBuilder> {
   late final controller = widget.controller ?? TextEditingController();
+  late final bool isExternalController;
 
   @override
   void initState() {
     super.initState();
-    controller.text = widget.field.value;
+    isExternalController = widget.controller != null;
+
+    if (!isExternalController) {
+      controller.text = widget.field.value;
+    }
+
     controller.addListener(_controllerListener);
   }
 
   @override
   void dispose() {
     controller.removeListener(_controllerListener);
-    if (widget.controller == null) {
+    if (isExternalController) {
       controller.dispose();
     }
     super.dispose();
