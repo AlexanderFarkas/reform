@@ -50,7 +50,7 @@ class _TextRefieldBuilderState extends State<TextRefieldBuilder> {
   @override
   void dispose() {
     controller.removeListener(_controllerListener);
-    if (isExternalController) {
+    if (!isExternalController) {
       controller.dispose();
     }
     super.dispose();
