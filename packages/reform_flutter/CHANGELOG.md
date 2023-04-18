@@ -1,3 +1,9 @@
+## 0.5.0
+
+> Note: This release has breaking changes.
+
+ - **BREAKING** **FIX**: don't dispose controller, if it's passed through parameter.
+
 ## 0.4.0
 
 > Note: This release has breaking changes.
