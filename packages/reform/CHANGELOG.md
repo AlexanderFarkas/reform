@@ -1,3 +1,9 @@
+## 0.4.0
+
+> Note: This release has breaking changes.
+
+ - **BREAKING** **FEAT**: refactoring.
+
 ## 0.3.1
 
  - **FEAT**: add `valid` extension method.
