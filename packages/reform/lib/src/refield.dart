@@ -46,22 +46,3 @@ class _ValidRefield<T> extends Refield<T, T> {
   @override
   T get sanitizedValue => value;
 }
-
-extension RefieldX<T> on T {
-  Refield<T, T> validate(Validator<T> validator) => _ValidatorRefield<T, T>(
-        validator: validator,
-        parent: _ValidRefield(this),
-      );
-
-  Refield<T, TSanitized> sanitize<TSanitized>(
-          Sanitizer<T, TSanitized> sanitizer) =>
-      _SanitizerRefield<T, TSanitized, T>(
-        sanitizer: sanitizer,
-        parent: _ValidRefield(this),
-      );
-
-  Refield<T, T> pending() =>
-      _StatusRefield.pending(parent: _ValidRefield(this));
-
-  Refield<T, T> valid() => _ValidRefield(this);
-}

@@ -6,7 +6,7 @@ You could use `validate` extensions method on any value to convert it to validat
 
 Validation is identical to Flutter concept: if value is valid, validator should return null. Otherwise - error text:
 ```dart
-final refield = "@my_username".validate(
+final refield = refield("@my_username").validate(
   (v) => v.length >= 10 
     ? null 
     : "Username should be at least 10 characters"
@@ -23,7 +23,7 @@ Sanitization comes in handy, when you apply formatting to your fields:
 ```dart
 /// Note: `normalizerFunction` and `phoneValidatorFunction` are user-defined functions. 
 /// You could code your own or use package from pub.dev
-final phoneField = "+1 (323) 888-88-88"
+final phoneField = refield("+1 (323) 888-88-88")
   .sanitize((v) => normalizerFunction(v))
   .validate((v) => phoneValidatorFunction());
 
@@ -46,13 +46,3 @@ final isFormValid = Reform.isValid([firstNameField, lastNameField, emailField]);
 
 isFormValid // true
 ```
-
-Also, there is `isEnabled` method:
-```dart
-final isEnabled = Reform.isEnabled([firstNameField, lastNameField, emailField]); 
-
-isFormEnabled // true
-```
-
-If `isEnabled == true` **user** can click on the submission button.
-If `isValid == true` **you** can send your form to your server.

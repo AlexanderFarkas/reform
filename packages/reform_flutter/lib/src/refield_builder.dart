@@ -5,7 +5,8 @@ typedef FieldWidgetBuilder<T> = Widget Function(
   String? errorText,
 );
 
-bool _defaultShouldShowError<T>(RefieldBuilderState<T> state) {
+bool _defaultShouldShowError<T>(
+    BuildContext context, RefieldBuilderState<T> state) {
   return !state.field.isPending;
 }
 
@@ -66,7 +67,7 @@ class RefieldBuilderState<T> extends State<RefieldBuilder<T>> {
 
           return widget.builder(
             context,
-            shouldShowErrorFn(this) ? field.error : null,
+            shouldShowErrorFn(context, this) ? field.error : null,
           );
         },
       ),

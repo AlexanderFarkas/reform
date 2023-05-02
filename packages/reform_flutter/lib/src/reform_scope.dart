@@ -1,7 +1,9 @@
 part of '../reform_flutter.dart';
 
 typedef ShowErrorPredicate<T> = bool Function(
-    RefieldBuilderState<T> fieldState);
+  BuildContext context,
+  RefieldBuilderState<T> fieldState,
+);
 
 class ReformScope extends InheritedWidget {
   final ShowErrorPredicate shouldShowError;

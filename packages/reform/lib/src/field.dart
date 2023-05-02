@@ -16,8 +16,8 @@ abstract class Field<T> {
   }
 
   bool get isValid => status == FieldStatus.valid;
-  bool get isPending => status == FieldStatus.pending;
   bool get isInvalid => status == FieldStatus.invalid;
+  bool get isPending => status == FieldStatus.pending;
 }
 
 abstract class SanitizedField<TOriginal, TSanitized> extends Field<TOriginal> {
@@ -25,3 +25,5 @@ abstract class SanitizedField<TOriginal, TSanitized> extends Field<TOriginal> {
 
   TSanitized get sanitizedValue;
 }
+
+Refield<T, T> refield<T>(T value) => _ValidRefield(value);

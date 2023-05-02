@@ -18,9 +18,17 @@ class Form {
 Add field validation:
 ```dart
 class Form {
-  ...
+  final String username;
+  final String password;
+  final String repeatPassword;
+  
+  Form({
+    required this.username,
+    required this.password,
+    required this.repeatPassword,
+  });
 
-  late final usernameField = username.validate((value) {
+  late final usernameField = refield(username).validate((value) {
     if (value.length < 8) {
       return "Min 8 chars";
     } else if (value.length > 16) {
@@ -31,11 +39,11 @@ class Form {
     return null;
   });
 
-  late final passwordField = password.validate(
+  late final passwordField = refield(password).validate(
     (value) => value.length < 8 ? "At least 8 characters" : null,
   );
 
-  late final repeatPasswordField = repeatPassword.validate(
+  late final repeatPasswordField = refield(repeatPassword).validate(
     (value) => value != password ? "Passwords should match" : null,
   );
 }
@@ -44,14 +52,14 @@ class Form {
 Wrap your Flutter `TextField`s:
 ```dart
 Widget build(BuildContext context) {
-  final form = ... // retrieve your form
+  final form = FormViewModel.of(context).form;
   return Column(
     children: [
       form.usernameField.builder(
         builder: (context, controller, errorText) => TextField(
           controller: controller, // provide controller
           decoration: InputDecoration(errorText: errorText),
-          onChanged: formViewModel.onUsernameChanged, // formViewModel - is your state managemnt instance. It could be ChangeNotifier, Cubit e.t.c.
+          onChanged: formViewModel.onUsernameChanged, // formViewModel - is your state management instance. It could be ChangeNotifier, Cubit e.t.c.
         ),
       ),
       form.passwordField.builder(
@@ -83,10 +91,9 @@ Wrap your widget tree with `ReformScope` like that:
 
 ```dart
 Widget build(BuildContext context) {
-  final form = ... // retrieve your form
-
   return ReformScope(
-    shouldShowError: (field, fieldState) => form.wasEverSubmitted || fieldState.wasEverUnfocused;
+    // example for Provider's `context.watch` 
+    shouldShowError: (context, fieldState) => FormViewModel.of(context).wasEverSubmitted || fieldState.wasEverUnfocused,
     child: ... // your `Widget` with fields
   );
 } 
@@ -102,8 +109,6 @@ Let's have a quick look at `ChangeNotifier` submission implementation:
 
 ```dart
 class FormViewModel extends ChangeNotifier {
-  ...
-
   void submit() {
     this.form = form.copyWith(wasEverSubmitted: true);
     notifyListeners();
