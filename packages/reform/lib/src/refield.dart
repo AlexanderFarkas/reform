@@ -28,14 +28,14 @@ abstract class Refield<TOriginal, TSanitized>
   Refield<TOriginal, T> as<T>() => sanitize((value) => value as T);
 
   Stream<Refield<TOriginal, TSanitized>> validateAsync(
-      Future<String?> Function(TOriginal value) validator) async* {
+      Future<String?> Function(TSanitized value) validator) async* {
     if (this.isInvalid) {
       yield this;
       return;
     }
 
     yield _StatusRefield.pending(parent: this);
-    final error = await validator(value);
+    final error = await validator(sanitizedValue);
     yield this.validate((value) => error);
   }
 }
