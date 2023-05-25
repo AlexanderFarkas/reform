@@ -11,6 +11,33 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 Packages with breaking changes:
 
+ - [`reform` - `v0.6.0`](#reform---v060)
+
+Packages with other changes:
+
+ - [`reform_flutter` - `v0.7.0+1`](#reform_flutter---v0701)
+
+Packages with dependency updates only:
+
+> Packages listed below depend on other packages in this workspace that have had changes. Their versions have been incremented to bump the minimum dependency versions of the packages they depend upon in this project.
+
+ - `reform_flutter` - `v0.7.0+1`
+
+---
+
+#### `reform` - `v0.6.0`
+
+ - **BREAKING** **FEAT**: async validation.
+
+
+## 2023-05-25
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
  - [`reform` - `v0.5.0`](#reform---v050)
  - [`reform_flutter` - `v0.7.0`](#reform_flutter---v070)
 

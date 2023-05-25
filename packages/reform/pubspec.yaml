@@ -4,7 +4,7 @@ description: >-
   built with Flutter in mind
 repository: https://github.com/AlexanderFarkas/reform/tree/main/packages/reform
 
-version: 0.5.0
+version: 0.6.0
 
 environment:
   sdk: '>=2.17.0 <3.0.0'
