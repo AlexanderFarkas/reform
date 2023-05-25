@@ -1,3 +1,9 @@
+## 0.7.0
+
+> Note: This release has breaking changes.
+
+ - **BREAKING** **FEAT**: refactoring.
+
 ## 0.6.0
 
 > Note: This release has breaking changes.

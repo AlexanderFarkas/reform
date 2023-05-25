@@ -3,6 +3,32 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2023-05-25
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - [`reform` - `v0.5.0`](#reform---v050)
+ - [`reform_flutter` - `v0.7.0`](#reform_flutter---v070)
+
+Packages with other changes:
+
+ - There are no other changes in this release.
+
+---
+
+#### `reform` - `v0.5.0`
+
+ - **BREAKING** **FEAT**: refactoring.
+
+#### `reform_flutter` - `v0.7.0`
+
+ - **BREAKING** **FEAT**: refactoring.
+
+
 ## 2023-05-02
 
 ### Changes
