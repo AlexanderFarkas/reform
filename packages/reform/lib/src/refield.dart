@@ -28,9 +28,7 @@ abstract class Refield<TOriginal, TSanitized>
   Refield<TOriginal, T> as<T>() => sanitize((value) => value as T);
 
   Stream<Refield<TOriginal, TSanitized>> validateAsync(
-    TOriginal value, {
-    required Future<String?> Function(TOriginal value) validator,
-  }) async* {
+      Future<String?> Function(TOriginal value) validator) async* {
     if (this.isInvalid) {
       yield this;
       return;
