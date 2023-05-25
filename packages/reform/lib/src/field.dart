@@ -26,4 +26,7 @@ abstract class SanitizedField<TOriginal, TSanitized> extends Field<TOriginal> {
   TSanitized get sanitizedValue;
 }
 
-Refield<T, T> refield<T>(T value) => _ValidRefield(value);
+Refield<T, T> refield<T>(T value, {bool isPending = false}) {
+  final create = isPending ? _StatusRefield.pending : _StatusRefield.valid;
+  return create(value);
+}

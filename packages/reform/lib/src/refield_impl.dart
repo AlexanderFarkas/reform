@@ -56,29 +56,3 @@ class _SanitizerRefield<T, TSanitized, TParentSanitized>
     }
   }
 }
-
-class _StatusRefield<TOriginal, TParentSanitized>
-    extends _RefieldWithParent<TOriginal, TParentSanitized, TParentSanitized> {
-  final String? _error;
-
-  @override
-  final FieldStatus status;
-
-  _StatusRefield.error({
-    required String error,
-    required super.parent,
-  })  : _error = error,
-        status = FieldStatus.invalid;
-
-  _StatusRefield.pending({required super.parent})
-      : _error = null,
-        status = FieldStatus.pending;
-
-  @override
-  TParentSanitized get sanitizedValue => parent.sanitizedValue;
-
-  /// If we provide error, we want it to be displayed.
-  /// So it's more reasonable here to show own [error] over [parent.error]
-  @override
-  String? get error => _error ?? parent.error;
-}

@@ -27,18 +27,23 @@ abstract class Refield<TOriginal, TSanitized>
 
   Refield<TOriginal, T> as<T>() => sanitize((value) => value as T);
 
-  Refield<TOriginal, TSanitized> withError(String error) =>
-      _StatusRefield.error(
-        error: error,
-        parent: this,
-      );
-
-  Refield<TOriginal, TSanitized> pending() =>
-      _StatusRefield.pending(parent: this);
+  static Stream<Refield<T, T>> validateAsync<T>(
+    T value, {
+    required Future<String?> Function(T value) validator,
+  }) async* {
+    yield refield(value, isPending: true);
+    final error = await validator(value);
+    yield refield(value).validate((value) => error);
+  }
 }
 
-class _ValidRefield<T> extends Refield<T, T> {
-  _ValidRefield(super.value);
+class _StatusRefield<T> extends Refield<T, T> {
+  _StatusRefield.valid(super.value) : status = FieldStatus.valid;
+
+  _StatusRefield.pending(super.value) : status = FieldStatus.pending;
+
+  @override
+  final FieldStatus status;
 
   @override
   String? get error => null;

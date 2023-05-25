@@ -66,24 +66,23 @@ void main() {
   });
 
   group("Pending", () {
-    Refield field(String value) => refield(value)
-        .sanitize((value) => value.replaceAll("@", ''))
-        .validate((value) => value.length > 10 ? null : "Min 11 chars");
+    Refield field(String value, {bool isPending = false}) =>
+        refield(value, isPending: isPending)
+            .sanitize((value) => value.replaceAll("@", ''))
+            .validate((value) => value.length > 10 ? null : "Min 11 chars");
 
     test("Test", () {
-      final usernameField = field("@myusername");
-      expect(usernameField.pending().status, equals(FieldStatus.pending));
+      expect(field("@myusername", isPending: true).status,
+          equals(FieldStatus.pending));
 
-      expect(usernameField.withError("Usernames is already user").error,
-          equals("Usernames is already user"));
-
-      expect(usernameField.error, equals("Min 11 chars"));
-      expect(usernameField.status, equals(FieldStatus.invalid));
+      final notPending = field("@myusername", isPending: false);
+      expect(notPending.error, equals("Min 11 chars"));
+      expect(notPending.status, equals(FieldStatus.invalid));
     });
 
     test("Priority", () {
       final usernameField =
-          refield("@my").pending().validate((value) => "Always error");
+          refield("@my", isPending: true).validate((value) => "Always error");
       expect(usernameField.status, equals(FieldStatus.pending));
       expect(usernameField.error, equals("Always error"));
       expect(Reform.isValid([usernameField]), false);
