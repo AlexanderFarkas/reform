@@ -27,33 +27,23 @@ abstract class Refield<TOriginal, TSanitized>
 
   Refield<TOriginal, T> as<T>() => sanitize((value) => value as T);
 
-  static Stream<Refield<T, TSanitized>> validateAsync<T, TSanitized>(
-    T value, {
-    required Future<String?> Function(T value) validator,
-    Refield<T, TSanitized> Function(Refield<T, T> value)? converter,
+  Stream<Refield<TOriginal, TSanitized>> validateAsync(
+    TOriginal value, {
+    required Future<String?> Function(TOriginal value) validator,
   }) async* {
-    Refield<T, TSanitized> applyConverter(Refield<T, T> value) =>
-        converter != null ? converter(value) : value as Refield<T, TSanitized>;
-
-    final initial = applyConverter(refield(value));
-    final isInvalid = initial.status == FieldStatus.invalid;
-    final shouldContinue = !isInvalid;
-    yield applyConverter(refield(value, isPending: shouldContinue));
-
-    if (shouldContinue) {
-      final error = await validator(value);
-      yield applyConverter(refield(value)).validate((value) => error);
+    if (this.isInvalid) {
+      yield this;
+      return;
     }
+
+    yield _StatusRefield.pending(parent: this);
+    final error = await validator(value);
+    yield this.validate((value) => error);
   }
 }
 
-class _StatusRefield<T> extends Refield<T, T> {
-  _StatusRefield.valid(super.value) : status = FieldStatus.valid;
-
-  _StatusRefield.pending(super.value) : status = FieldStatus.pending;
-
-  @override
-  final FieldStatus status;
+class ValidRefield<T> extends Refield<T, T> {
+  ValidRefield(super.value);
 
   @override
   String? get error => null;
