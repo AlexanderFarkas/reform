@@ -1,3 +1,9 @@
+## 0.7.0
+
+> Note: This release has breaking changes.
+
+ - **BREAKING** **FEAT**: async validation.
+
 ## 0.6.0
 
 > Note: This release has breaking changes.
