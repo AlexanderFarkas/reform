@@ -1,3 +1,9 @@
+## 0.10.0
+
+> Note: This release has breaking changes.
+
+ - **BREAKING** **FEAT**: remove lazy evaluation.
+
 ## 0.9.0
 
 > Note: This release has breaking changes.

@@ -3,6 +3,33 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2023-06-20
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - [`reform` - `v0.10.0`](#reform---v0100)
+
+Packages with other changes:
+
+ - [`reform_flutter` - `v0.7.0+5`](#reform_flutter---v0705)
+
+Packages with dependency updates only:
+
+> Packages listed below depend on other packages in this workspace that have had changes. Their versions have been incremented to bump the minimum dependency versions of the packages they depend upon in this project.
+
+ - `reform_flutter` - `v0.7.0+5`
+
+---
+
+#### `reform` - `v0.10.0`
+
+ - **BREAKING** **FEAT**: remove lazy evaluation.
+
+
 ## 2023-05-25
 
 ### Changes
