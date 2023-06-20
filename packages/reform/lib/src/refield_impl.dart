@@ -19,14 +19,15 @@ abstract class _RefieldWithParent<TOriginal, TSanitized, TParentSanitized>
 
 class _ValidatorRefield<T, TParentSanitized>
     extends _RefieldWithParent<T, TParentSanitized, TParentSanitized> {
-  final Validator<TParentSanitized> _validator;
   _ValidatorRefield({
     required super.parent,
     required Validator<TParentSanitized> validator,
-  }) : _validator = validator;
+  }) {
+    error = parent.error ?? validator(sanitizedValue);
+  }
 
   @override
-  late final String? error = parent.error ?? _validator(sanitizedValue);
+  late final String? error;
 
   @override
   late final TParentSanitized sanitizedValue = parent.sanitizedValue;
@@ -34,26 +35,27 @@ class _ValidatorRefield<T, TParentSanitized>
 
 class _SanitizerRefield<T, TSanitized, TParentSanitized>
     extends _RefieldWithParent<T, TSanitized, TParentSanitized> {
-  final Sanitizer<TParentSanitized, TSanitized> _sanitizer;
-
   _SanitizerRefield({
     required super.parent,
     required Sanitizer<TParentSanitized, TSanitized> sanitizer,
-  }) : _sanitizer = sanitizer;
+  }) : error = parent.error {
+    if (!isInvalid) {
+      _sanitizedValue = sanitizer(parent.sanitizedValue);
+    }
+  }
 
   @override
-  late final error = parent.error;
-  late final TSanitized _sanitizedValue = _sanitizer(parent.sanitizedValue);
+  final String? error;
+  late final TSanitized _sanitizedValue;
 
   @override
   TSanitized get sanitizedValue {
-    if (isValid) {
-      return _sanitizedValue;
-    } else {
+    if (isInvalid) {
       throw StateError(
-        "`sanitizedValue` cannot be accessed, when `isValid == false`",
+        "`sanitizedValue` cannot be accessed, when `isInvalid == true`",
       );
     }
+    return _sanitizedValue;
   }
 }
 
